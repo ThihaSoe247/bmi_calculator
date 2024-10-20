@@ -1,12 +1,10 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class iconContent extends StatelessWidget {
+class IconContent extends StatelessWidget {
   final IconData gender;
   final String text;
-  iconContent({required this.gender,required this.text});
+  const IconContent({super.key, required this.gender,required this.text});
   @override
   Widget build(BuildContext context) {
     return  Column(
@@ -16,10 +14,10 @@ class iconContent extends StatelessWidget {
           gender,
           size: 80.0,
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Text(
           text,
-          style: TextStyle(fontSize: 20, color: Colors.white),
+          style: const TextStyle(fontSize: 20, color: Colors.white),
         )
       ],
     );
@@ -56,7 +54,7 @@ Widget buildValueCard({
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.all(10),
               shape: const CircleBorder(),
-              backgroundColor: const Color(0x6A6F73),
+              backgroundColor: const Color(0x006a6f73),
             ),
             child: const Icon(
               FontAwesomeIcons.plus,
@@ -69,7 +67,7 @@ Widget buildValueCard({
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.all(10),
               shape: const CircleBorder(),
-              backgroundColor: const Color(0x6A6F73),
+              backgroundColor: const Color(0x006a6f73),
             ),
             child: const Icon(
               FontAwesomeIcons.minus,

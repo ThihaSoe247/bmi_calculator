@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'input_page.dart';
+import 'screens/input_page.dart';
 
-void main() => runApp(BMICalculator());
+void main() => runApp(const BMICalculator());
 
 class BMICalculator extends StatelessWidget {
+  const BMICalculator({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +17,7 @@ class BMICalculator extends StatelessWidget {
           backgroundColor: Colors.red, // Applies the theme color to FAB globally
         ),
       ),
-      home: InputPage(),
+      home: const InputPage(),
     );
   }
 }

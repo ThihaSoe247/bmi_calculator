@@ -1,28 +1,32 @@
-import 'package:bmi_calculator/reuseable_card.dart';
+import 'package:bmi_calculator/calculator.dart';
+import 'package:bmi_calculator/components/calculate_button.dart';
+import 'package:bmi_calculator/components/reuseable_card.dart';
+import 'package:bmi_calculator/screens/result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'icon_content.dart';
+import 'package:bmi_calculator/components/icon_content.dart';
 
 const bottomContainerHeight = 80.0;
 const containerColor = Color(0xFF1D1E33);
 const inactiveColor = Color(0xFF111328);
 const bottomContainerColor = Color(0xFFEB1555);
+double currentHeight = 35.0;
+int weight = 0;
+int age = 0;
+Color maleCardColor = inactiveColor;
+Color femaleCardColor = inactiveColor;
 
 class InputPage extends StatefulWidget {
+  const InputPage({super.key});
+
   @override
   _InputPageState createState() => _InputPageState();
 }
 
 class _InputPageState extends State<InputPage> {
-  double currentHeight = 35.0;
-  int weight = 0;
-  int age = 0;
-  Color maleCardColor = inactiveColor;
-  Color femaleCardColor = inactiveColor;
-
-  genderChoice? selectedGender;
 
 
+  GenderChoice? selectedGender;
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +46,15 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    touchDetect: (){
+                    touchDetect: () {
                       setState(() {
-                        selectedGender = genderChoice.MALE;
+                        selectedGender = GenderChoice.MALE;
                       });
                     },
-                    colour: selectedGender == genderChoice.MALE ? containerColor : inactiveColor,
-                    cardChild: iconContent(
+                    colour: selectedGender == GenderChoice.MALE
+                        ? containerColor
+                        : inactiveColor,
+                    cardChild: const IconContent(
                       gender: FontAwesomeIcons.mars,
                       text: "MALE",
                     ),
@@ -56,13 +62,15 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: ReusableCard(
-                    touchDetect: (){
+                    touchDetect: () {
                       setState(() {
-                        selectedGender = genderChoice.FEMALE;
+                        selectedGender = GenderChoice.FEMALE;
                       });
                     },
-                    colour: selectedGender == genderChoice.FEMALE ? containerColor : inactiveColor,
-                    cardChild: iconContent(
+                    colour: selectedGender == GenderChoice.FEMALE
+                        ? containerColor
+                        : inactiveColor,
+                    cardChild: const IconContent(
                       gender: FontAwesomeIcons.venus,
                       text: "FEMALE",
                     ),
@@ -101,10 +109,11 @@ class _InputPageState extends State<InputPage> {
                     data: SliderTheme.of(context).copyWith(
                         inactiveTrackColor: Colors.grey,
                         activeTrackColor: Colors.white,
-                      thumbColor: Colors.pink,
-                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                      overlayShape:  RoundSliderOverlayShape(overlayRadius: 30)
-    ),
+                        thumbColor: Colors.pink,
+                        thumbShape:
+                            const RoundSliderThumbShape(enabledThumbRadius: 15),
+                        overlayShape:
+                            const RoundSliderOverlayShape(overlayRadius: 30)),
                     child: Slider(
                       value: currentHeight,
                       onChanged: (value) {
@@ -174,18 +183,24 @@ class _InputPageState extends State<InputPage> {
           ),
 
           // Bottom Container
-          Container(
-            color: bottomContainerColor,
-            margin: const EdgeInsets.only(top: 10),
-            width: double.infinity,
-            height: bottomContainerHeight,
-          ),
+          CalculateButton(title: "Calculate Your BMI",onTap: (){
+
+            Calculator calc = Calculator(height: currentHeight.round(), weight:  weight);
+            final result = calc.calculateBMI();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ResultPage(bmiResult: result, resultText: calc.getResult(), interpret: calc.getInterpretation()))
+                );
+
+          },),
         ],
       ),
     );
   }
 }
-enum genderChoice{
+
+
+enum GenderChoice {
   MALE,
   FEMALE,
 }
